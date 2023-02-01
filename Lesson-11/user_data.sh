@@ -11,7 +11,7 @@ cat <<EOF >/var/www/html/index.html
 <font color="green">Server PrivateIP: <font color="aqua">$myip<br><br>
 <h3>Editor Sekator</h3>
 <font color="magenta">
-<b>Version 1.0</b>
+<b>Version 2.0</b>
 </body>
 </html>
 EOF

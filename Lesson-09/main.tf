@@ -9,7 +9,7 @@ data "aws_vpcs" "my_vpcs" {}
 
 data "aws_vpc" "prod_vpc" {
   tags = {
-    Name = "prod"
+    Name = "prod"  // фільтруемо по тагу шукаючи vpc
   }
 }
 

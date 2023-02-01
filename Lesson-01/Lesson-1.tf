@@ -2,8 +2,10 @@ provider "aws" {}
 
 
 resource "aws_instance" "my_Ubuntu" {
-  ami           = "ami-090f10efc254eaf55"
+  ami           = "ami-03e08697c325f02ab"
   instance_type = "t2.micro"
+#  count         = 3 // count resourse
+
 
   tags = {
     Name    = "My Ubuntu Server"
@@ -13,7 +15,7 @@ resource "aws_instance" "my_Ubuntu" {
 }
 
 resource "aws_instance" "my_Amazon" {
-  ami           = "ami-03a71cec707bfc3d7"
+  ami           = "ami-06c39ed6b42908a36"
   instance_type = "t2.micro"
 
   tags = {

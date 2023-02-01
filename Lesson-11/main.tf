@@ -1,5 +1,5 @@
 #----------------------------------------------------------
-# Provision Highly Availabe Web in any Region Default VPC
+# Provision Highly Availalabe Web in any Region Default VPC
 # Create:
 #    - Security Group for Web Server
 #    - Launch Configuration with Auto AMI Lookup
@@ -55,7 +55,7 @@ resource "aws_security_group" "web" {
 
 resource "aws_launch_configuration" "web" {
   //  name            = "WebServer-Highly-Available-LC"   hard variant !!!!
-  name_prefix     = "WebServer-Highly-Available-LC-"
+  name_prefix     = "WebServer-Highly-Available-LC-" // це що напишемо буде спочатку а амазон шось добавить
   image_id        = data.aws_ami.latest_amazon_linux.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.web.id]
@@ -69,7 +69,7 @@ resource "aws_launch_configuration" "web" {
 
 
 resource "aws_autoscaling_group" "web" {
-  name                 = "ASG-${aws_launch_configuration.web.name}"
+  name                 = "ASG-${aws_launch_configuration.web.name}" // тут підхватуемо імя з нового лаундж конфіг
   launch_configuration = aws_launch_configuration.web.name
   min_size             = 2
   max_size             = 2
@@ -102,17 +102,17 @@ resource "aws_elb" "web" {
   availability_zones = [data.aws_availability_zones.available.names[0], data.aws_availability_zones.available.names[1]]
   security_groups    = [aws_security_group.web.id]
   listener {
-    lb_port           = 80
+    lb_port           = 80   // слухаем
     lb_protocol       = "http"
-    instance_port     = 80
+    instance_port     = 80  // сюда пересилаемо трафік
     instance_protocol = "http"
   }
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:80/"
-    interval            = 10
+    target              = "HTTP:80/" // сторінка яка відповідатиме
+    interval            = 10      // 10 секунд смикати
   }
   tags = {
     Name = "WebServer-Highly-Available-ELB"
